@@ -90,6 +90,7 @@ function onBoxClick() {
   if (grid[colIdx][rowIdx] == 0) {
     grid[colIdx][rowIdx] = newValue;
 
+    // check if user is winning by playing this
     var wins = winCheck(newValue);
 
     if (wins) {
@@ -97,6 +98,7 @@ function onBoxClick() {
       renderSuccessBanner("You win");
       return;
     } else {
+      // computer turn
       var result = computerTurn();
       if (result) {
         renderMainGrid();
@@ -123,6 +125,7 @@ document.getElementById("restartGame").addEventListener("click", function() {
 });
 
 function computerTurn() {
+  // is computer winning in any non empty position
   isWinning = false;
   for (let i = 0; i < GRID_LENGTH; i++) {
     for (let j = 0; j < GRID_LENGTH; j++) {
@@ -143,6 +146,7 @@ function computerTurn() {
     return true;
   }
 
+  // is other player winning in any non empty position
   isOpponentWinning = false;
   for (let i = 0; i < GRID_LENGTH; i++) {
     for (let j = 0; j < GRID_LENGTH; j++) {
@@ -165,12 +169,14 @@ function computerTurn() {
   }
 
   if (!isOpponentWinning) {
+    //no one is winning, so play random in empty place
     playRandom(2);
   }
 
   return false;
 }
 
+// checks if grid has any empty spaces left
 function checkIfZeroPresent() {
   isZero = false;
   for (let i = 0; i < GRID_LENGTH; i++) {
@@ -219,8 +225,7 @@ function addClickHandlers() {
   }
 }
 
-function canWin(grid, whoIsPlaying) {}
-
+// common function to check wininng conditions in the grid
 function winCheck(playerValue) {
   // check logic for right or left diagonal
   let isLeftDiaglonal = true;
